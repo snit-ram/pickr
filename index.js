@@ -91,7 +91,35 @@ var PickrBase = {
         });
 
         return result;
-    }
+    },
+
+    transform: function(context, path, fn) {
+        var pathParts = path.split('.'),
+            lastPathIndex = pathParts.length - 1,
+            pointer = context;
+
+        pathParts.every(function(attribute, pathIndex) {
+            if (isList(pointer)) {
+                pointer.forEach(function(value, pointerIndex) {
+                    pointer[pointerIndex] = PickrBase.transform(value, pathParts.slice(pathIndex).join('.'), fn);
+                });
+                return false;
+            }
+
+            if (!pointer[attribute]) {
+                return false;
+            }
+
+            if (lastPathIndex === pathIndex) {
+                pointer[attribute] = fn(pointer[attribute]);
+            }
+
+            pointer = pointer[attribute];
+            return true;
+        });
+
+        return context;
+    },
 };
 
 function pickr(context) {
