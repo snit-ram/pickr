@@ -77,6 +77,10 @@ var PickrBase = {
         return defaultValue;
     },
 
+    exists: function (context, path) {
+        return getAllFromPath(context, path).length > 0;
+    },
+
     hash: function(context, keysPath, valuesPath) {
         var keys = PickrBase.all(context, keysPath),
             values = PickrBase.all(context, valuesPath),
