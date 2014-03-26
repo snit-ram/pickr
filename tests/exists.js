@@ -5,6 +5,14 @@ var pickr = require('../index');
 chai.Assertion.includeStack = true;
 
 describe('exists', function() {
+    it('should return false if path does not exist', function() {
+        var result = pickr.exists({
+            name: 'Spence Sears',
+        }, 'nopath');
+
+        expect(result).to.be.false;
+    });
+
     it('should return true if simple path exists', function() {
         var result = pickr.exists({
             name: 'Spence Sears',

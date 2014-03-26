@@ -78,7 +78,9 @@ var PickrBase = {
     },
 
     exists: function (context, path) {
-        return getAllFromPath(context, path).length > 0;
+        var match = getAllFromPath(context, path);
+
+        return isList(match) && match.length > 0;
     },
 
     hash: function(context, keysPath, valuesPath) {
